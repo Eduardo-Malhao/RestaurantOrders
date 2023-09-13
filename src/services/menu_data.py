@@ -29,6 +29,6 @@ class MenuData:
 
                 temporary[name].add_ingredient_dependency(ingredient, amount)
 
-            dishes = set(temporary.values())
+            self.dishes = set(temporary.values())
 
         return dishes
