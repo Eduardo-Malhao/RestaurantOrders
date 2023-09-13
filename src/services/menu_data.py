@@ -8,12 +8,14 @@ class MenuData:
         self.source_path = source_path
         self.dishes = self._load_data()
 
+
     def _load_data(self):
         dishes = set()
-        temporary = {}
 
-        with open(self.source_path) as file:
-            reader = csv.reader(file)
+        with open(self.source_path, newline="", encoding="utf-8") as file:
+            reader = csv.DictReader(file)
+            temporary = {}
+
             for row in reader:
                 name = row["dish"]
                 price = float(row["price"])
@@ -24,7 +26,9 @@ class MenuData:
 
                 if name not in temporary:
                     temporary[name] = Dish(name, price)
-                temporary[name].add_ingredient_dependency(Ingredient(ingredient), amount)
+
                 temporary[name].add_ingredient_dependency(ingredient, amount)
+
+            dishes = set(temporary.values())
 
         return dishes
