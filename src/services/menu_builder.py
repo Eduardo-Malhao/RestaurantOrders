@@ -38,7 +38,7 @@ class MenuBuilder:
                 "restrictions": dish.get_restrictions(),
             }
 
-            if (restriction is None and restriction not in dish.get_restrictions()):
+            if (restriction not in dish.get_restrictions()):
                 menu.append(dishesData)
 
         return menu
