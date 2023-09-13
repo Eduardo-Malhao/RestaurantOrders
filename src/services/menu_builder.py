@@ -37,5 +37,4 @@ class MenuBuilder:
             for dish in self.menu_data
             if restriction is None or restriction not in dish.get_restrictions()
         ]
-
         return menu
