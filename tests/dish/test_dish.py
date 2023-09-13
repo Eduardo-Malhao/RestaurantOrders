@@ -20,33 +20,26 @@ def test_dish():
     assert mc.__eq__(mc) is True
     assert big.__eq__(mc) is False
 
-    tomato = Ingredient("tomato")
-    hamburguer = Ingredient("hamburguer")
-    cheese = Ingredient("cheese")
-
-    big.add_ingredient_dependency(tomato, 1)
-    big.add_ingredient_dependency(hamburguer, 2)
-    mc.add_ingredient_dependency(hamburguer, 1)
-    mc.add_ingredient_dependency(cheese, 2)
-
-    assert mc.recipe == {tomato: 1, hamburguer: 1, cheese: 2}
+    big.add_ingredient_dependency(tomate, 1)
+    big.add_ingredient_dependency(carne, 2)
+    mc.add_ingredient_dependency(carne, 1)
+    mc.add_ingredient_dependency(pepino, 2)
 
     assert mc.get_restrictions() == {
         Restriction.ANIMAL_DERIVED,
         Restriction.ANIMAL_MEAT,
     }
 
-    assert mc.get_ingredients() == {tomato, hamburguer, cheese}
+    assert mc.get_ingredients() == {
+        Ingredient("carne"),
+        Ingredient("pepino"),
+    }
+    assert mc.recipe == {Ingredient("carne"): 1, Ingredient("pepino"): 2}
 
-    with pytest.raises(TypeError):
-        Dish("Invalid Dish", "invalid_price")
+    with pytest.raises(ValueError) as error:
+        Dish("pepino", -1000)
+    assert str(error.value) == "Dish price must be greater then zero."
 
-    with pytest.raises(ValueError):
-        Dish("Invalid Dish", -10.0)
-
-    assert mc.recipe.get(tomato) == 1
-    assert mc.recipe.get(hamburguer) == 1
-    assert mc.recipe.get(cheese) == 2
-
-    xernous = Ingredient("xernous")
-    assert mc.recipe.get(xernous) is None
+    with pytest.raises(TypeError) as error:
+        Dish("carne", "1000")
+    assert str(error.value) == "Dish price must be float."
