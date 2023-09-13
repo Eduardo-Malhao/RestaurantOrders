@@ -12,6 +12,7 @@ class MenuBuilder:
         self.menu_data = MenuData(data_path)
         self.inventory = InventoryMapping(inventory_path)
 
+
     def make_order(self, dish_name: str) -> None:
         try:
             curr_dish = [
@@ -23,6 +24,7 @@ class MenuBuilder:
             raise ValueError("Dish does not exist")
 
         self.inventory.consume_recipe(curr_dish.recipe)
+
 
     # Req 4
     def get_main_menu(self, restriction=None) -> List[Dict]:
@@ -40,4 +42,3 @@ class MenuBuilder:
                 dish.append(dishes_info)
 
         return menu
-
