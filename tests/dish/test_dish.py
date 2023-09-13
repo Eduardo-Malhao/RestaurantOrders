@@ -10,9 +10,11 @@ def test_dish():
 
     assert mc.name == "MC Lanche"
     assert mc.price == 18.00
+    assert big.name == "Big Mac"
+    assert big.price == 12.99
 
-    assert repr(mc) == "Dish('MC Lanche', R$18.00)"
-    assert repr(big) == "Dish('Big Mac', R$12.99)"
+    assert mc.__repr__() == "Dish('MC Lanche', R$18.00)"
+    assert big.__repr__() == "Dish('Big Mac', R$12.99)"
 
     assert hash(mc) == hash("Dish('MC Lanche', R$18.00)")
     assert hash(big) != hash("xernous")
@@ -20,10 +22,8 @@ def test_dish():
     assert mc.__eq__(mc) is True
     assert big.__eq__(mc) is False
 
-    big.add_ingredient_dependency(tomate, 1)
-    big.add_ingredient_dependency(carne, 2)
-    mc.add_ingredient_dependency(carne, 1)
-    mc.add_ingredient_dependency(pepino, 2)
+    mc.add_ingredient_dependency(Ingredient("carne"), 1)
+    mc.add_ingredient_dependency(Ingredient("pepino"), 2)
 
     assert mc.get_restrictions() == {
         Restriction.ANIMAL_DERIVED,
