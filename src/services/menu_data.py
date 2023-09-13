@@ -17,12 +17,14 @@ class MenuData:
             for row in reader:
                 name = row["dish"]
                 price = float(row["price"])
-                ingredient = row["ingredient"]
+                ingredientName = row["ingredient"]
                 amount = int(row["recipe_amount"])
+
+                ingredient = Ingredient(ingredientName)
 
                 if name not in temporary:
                     temporary[name] = Dish(name, price)
                 temporary[name].add_ingredient_dependency(Ingredient(ingredient), amount)
-                dishes.add(temporary[name])
+                temporary[name].add_ingredient_dependency(ingredient, amount)
 
         return dishes
