@@ -25,16 +25,19 @@ class MenuBuilder:
 
         self.inventory.consume_recipe(curr_dish.recipe)
 
-    # Req 4
+
     def get_main_menu(self, restriction=None) -> List[Dict]:
-        menu = [
-            {
+        menu = []
+
+        for dish in self.menu_data:
+            dishesData = {
                 "dish_name": dish.name,
                 "ingredients": dish.get_ingredients(),
                 "price": dish.price,
                 "restrictions": dish.get_restrictions(),
             }
-            for dish in self.menu_data
-            if restriction is None or restriction not in dish.get_restrictions()
-        ]
+
+            if (restriction not in dish.get_restrictions()):
+                menu.append(dishesData)
+
         return menu
